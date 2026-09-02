@@ -1,0 +1,312 @@
+{
+  "id": "characters",
+  "name": "Personajes Legendarios de Ficción",
+  "shortName": "Personajes",
+  "subtitle": "Filosofía, determinación y auras que han redefinido mi forma de ver el mundo",
+  "description": "Una selección meticulosa de protagonistas, antagonistas y figuras complejas que destacan por sus principios inquebrantables, evolución psicológica y citas inolvidables.",
+  "icon": "Flame",
+  "accentColor": "#6366f1",
+  "gradient": "from-indigo-500 via-purple-500 to-pink-500",
+  "tags": ["Anime", "Cómic", "Filosofía", "Aura", "Trascendencia"],
+  "lastUpdated": "2026-09-02",
+  "items": [
+    {
+      "id": "goku-ultra-instinct",
+      "rank": 1,
+      "title": "Son Goku",
+      "subtitle": "Doctrina Egoísta (Ultra Instinto Dominado)",
+      "work": "Dragon Ball Super",
+      "quote": "Incluso un guerrero de clase baja puede sobrepasar a un guerrero distinguido si se esfuerza lo suficiente.",
+      "quoteContext": "Dicho a Vegeta en su primer combate, revalidado al alcanzar el estado de los dioses.",
+      "whyFavorite": "Representa la cúspide de la superación personal sin resentimiento. El Ultra Instinto no es solo un power-up, es un estado mental zen donde el cuerpo actúa en perfecta armonía con el espíritu.",
+      "imageUrl": "https://static.wikia.nocookie.net/dragonballfighterz/images/5/58/Goku_%28Ultra_Instinct%29_Artwork.png",
+      "fallbackImageUrl": "https://media.kitsu.app/characters/images/68743/original.jpg",
+      "themeColor": "#e0e7ff",
+      "accentGradient": "from-slate-200 via-indigo-300 to-sky-400",
+      "badges": ["Top Tier Absoluto", "Doctrina Divina", "Superación"],
+      "personalityTraits": ["Inquebrantable", "Noble", "Zen", "Puro"],
+      "alignment": "Héroe Trascendente",
+      "tier": "S+",
+      "vibeSong": {
+        "title": "Ultimate Battle (Ka Ka Kachi Daze)",
+        "artist": "Akira Kushida"
+      },
+      "stats": {
+        "impact": 100,
+        "depth": 88,
+        "aura": 100
+      }
+    },
+    {
+      "id": "gojo-satoru",
+      "rank": 2,
+      "title": "Gojo Satoru",
+      "subtitle": "El Chamán Más Fuerte de la Era Moderna",
+      "work": "Jujutsu Kaisen",
+      "quote": "En todo el cielo y la tierra, solo yo soy el venerado. Tranquilo, después de todo... soy el más fuerte.",
+      "quoteContext": "Al despertar su técnica maldita invertida y ante cualquier amenaza maldita.",
+      "whyFavorite": "La combinación perfecta de arrogancia justificada, carisma abrumador y una profunda soledad existencial provocada por estar en la cima absoluta de la pirámide.",
+      "imageUrl": "https://media.kitsu.app/character/105898/image/8a8a441392fe5191c2449460e7338ce6.jpg",
+      "fallbackImageUrl": "https://media.kitsu.app/characters/images/15359/original.jpg",
+      "themeColor": "#38bdf8",
+      "accentGradient": "from-sky-400 via-blue-600 to-indigo-700",
+      "badges": ["Seis Ojos", "Vacío Inconmensurable", "El Más Fuerte"],
+      "personalityTraits": ["Carismático", "Inconmovible", "Protector", "Solitario"],
+      "alignment": "Caótico Bueno",
+      "tier": "S+",
+      "vibeSong": {
+        "title": "Judgement / Hollow Purple Theme",
+        "artist": "Yoshimasa Terui"
+      },
+      "stats": {
+        "impact": 98,
+        "depth": 92,
+        "aura": 100
+      }
+    },
+    {
+      "id": "garou",
+      "rank": 3,
+      "title": "Garou",
+      "subtitle": "El Cazador de Héroes / Monstruo Humano",
+      "work": "One Punch Man",
+      "quote": "¿El bien? ¿El mal? Los rechazo a ambos. Me convertiré en el mal absoluto para obligar al mundo entero a unirse contra mí.",
+      "quoteContext": "Frente a los héroes de la Asociación para desmantelar la hipocresía social.",
+      "whyFavorite": "Un antihéroe con una filosofía brutalmente honesta: desafiar la tiranía de la 'mayoría justa' que discrimina al débil. Su resiliencia y evolución combate tras combate es de lo más visceral en la ficción.",
+      "imageUrl": "https://media.kitsu.app/characters/images/84805/original.jpg",
+      "fallbackImageUrl": "https://media.kitsu.app/characters/images/84805/original.jpg",
+      "themeColor": "#fb7185",
+      "accentGradient": "from-rose-500 via-purple-700 to-slate-950",
+      "badges": ["Puño de Agua Fluyente", "Evolución Infinita", "Monstruo Humano"],
+      "personalityTraits": ["Resiliente", "Idealista Herido", "Indomable"],
+      "alignment": "Antihéroe Rebelde",
+      "tier": "S",
+      "vibeSong": {
+        "title": "Garou's Theme (Awakening)",
+        "artist": "Makoto Miyazaki"
+      },
+      "stats": {
+        "impact": 95,
+        "depth": 95,
+        "aura": 97
+      }
+    },
+    {
+      "id": "kakashi-hatake",
+      "rank": 4,
+      "title": "Kakashi Hatake",
+      "subtitle": "El Ninja que Copia / Sexto Hokage",
+      "work": "Naruto Shippuden",
+      "quote": "Perdón por llegar tarde, es que me perdí en el sendero de la vida...",
+      "quoteContext": "Llegando tarde a entrenar al Equipo 7 tras visitar la tumba de Obito y Rin.",
+      "whyFavorite": "Sufrió todas las tragedias posibles (suicidio de su padre, muerte de sus compañeros de equipo, de su maestro) y jamás sucumbió a la oscuridad; eligió transmitir amor, paciencia y protección a la siguiente generación.",
+      "imageUrl": "https://media.kitsu.app/characters/images/219/original.jpg",
+      "fallbackImageUrl": "https://media.kitsu.app/characters/images/219/original.jpg",
+      "themeColor": "#a78bfa",
+      "accentGradient": "from-purple-400 via-violet-600 to-indigo-900",
+      "badges": ["Sharingan", "Corte del Relámpago", "Maestro Paciente"],
+      "personalityTraits": ["Sabio", "Tranquilo", "Leal", "Melancólico"],
+      "alignment": "Legal Bueno",
+      "tier": "S",
+      "vibeSong": {
+        "title": "Sadness and Sorrow",
+        "artist": "Toshio Masuda"
+      },
+      "stats": {
+        "impact": 94,
+        "depth": 97,
+        "aura": 94
+      }
+    },
+    {
+      "id": "sylphiette-greyrat",
+      "rank": 5,
+      "title": "Sylphiette Greyrat",
+      "subtitle": "Fitz el Silencioso / Esposa y Pilar de Rudi",
+      "work": "Mushoku Tensei: Jobless Reincarnation",
+      "quote": "No importa qué tan difícil sea el camino o cuántas veces dudes, siempre estaré a tu lado para sostenerte. Para mí, tú eres todo mi mundo.",
+      "quoteContext": "En su madurez con su cabello blanco, aceptando a Rudeus con devoción y ternura incondicional.",
+      "whyFavorite": "Su evolución de niña vulnerable a maga de élite en la corte real, y posteriormente a mujer madura de cabello blanco y corazón generoso. Representa la lealtad, la empatía y el refugio emocional supremo.",
+      "imageUrl": "https://static.wikia.nocookie.net/mushokutensei/images/c/cf/MT-AN-S3P1v2-Sylphiette-FullBody.png",
+      "fallbackImageUrl": "https://media.kitsu.app/characters/images/58177/original.jpg",
+      "themeColor": "#34d399",
+      "accentGradient": "from-emerald-300 via-teal-500 to-slate-800",
+      "badges": ["Magia Silenciosa", "Cabello Blanco", "Pilar Familiar"],
+      "personalityTraits": ["Devota", "Empática", "Poderosa", "Protectora"],
+      "alignment": "Neutral Bueno",
+      "tier": "A+",
+      "vibeSong": {
+        "title": "Tabibito no Uta",
+        "artist": "Yuiko Ohara"
+      },
+      "stats": {
+        "impact": 89,
+        "depth": 96,
+        "aura": 90
+      }
+    },
+    {
+      "id": "william-james-moriarty",
+      "rank": 6,
+      "title": "William James Moriarty",
+      "subtitle": "El Asesor del Crimen / El Enemigo de la Tiranía",
+      "work": "Moriarty the Patriot",
+      "quote": "Atrápame si puedes, Sr. Holmes. Por el bien de un mundo donde el pueblo no tenga que llorar bajo la tiranía de unos pocos.",
+      "quoteContext": "Dirigido a Sherlock Holmes como parte de su plan de expiación para purificar Londres.",
+      "whyFavorite": "Un estratega brillante de intelecto sobrehumano que asumió el papel de villano ante la historia con tal de destruir el corrupto sistema de clases aristocrático y salvar vidas desposeídas.",
+      "imageUrl": "https://static.wikia.nocookie.net/moriarty-the-patriot/images/b/b5/PostTS_William.jpg",
+      "fallbackImageUrl": "https://media.kitsu.app/characters/images/14429/original.jpg",
+      "themeColor": "#f87171",
+      "accentGradient": "from-red-400 via-rose-700 to-zinc-950",
+      "badges": ["Mente Maestra", "Expiador", "Elegancia Victoriana"],
+      "personalityTraits": ["Estratega", "Nobleza Oculta", "Frío", "Compasivo"],
+      "alignment": "Antihéroe Utópico",
+      "tier": "A+",
+      "vibeSong": {
+        "title": "Twisted Hearts",
+        "artist": "Tasuku Hatanaka"
+      },
+      "stats": {
+        "impact": 91,
+        "depth": 96,
+        "aura": 96
+      }
+    },
+    {
+      "id": "lelouch-vi-britannia",
+      "rank": 7,
+      "title": "Lelouch Vi Britannia",
+      "subtitle": "Zero / El Emperador Tirano que Trajo la Paz",
+      "work": "Code Geass: Lelouch of the Rebellion",
+      "quote": "El único que debe disparar es aquel que está preparado para recibir el disparo.",
+      "quoteContext": "El principio moral supremo con el que dirigió a los Caballeros Negros hasta el Zero Requiem.",
+      "whyFavorite": "El pináculo del sacrificio táctico. Estuvo dispuesto a convertirse en el monstruo más odiado del planeta para que toda la humanidad enfocara su odio en él y pudiera nacer una era de paz.",
+      "imageUrl": "https://media.kitsu.app/characters/images/16460/original.jpg",
+      "fallbackImageUrl": "https://media.kitsu.app/characters/images/16460/original.jpg",
+      "themeColor": "#c084fc",
+      "accentGradient": "from-purple-500 via-indigo-700 to-black",
+      "badges": ["Poder del Geass", "Zero Requiem", "Estratega Legendario"],
+      "personalityTraits": ["Audaz", "Calculador", "Trágico", "Carismático"],
+      "alignment": "Caótico Neutral / Redentor",
+      "tier": "S",
+      "vibeSong": {
+        "title": "Colors",
+        "artist": "FLOW"
+      },
+      "stats": {
+        "impact": 97,
+        "depth": 99,
+        "aura": 98
+      }
+    },
+    {
+      "id": "killua-zoldyck",
+      "rank": 8,
+      "title": "Killua Zoldyck",
+      "subtitle": "El Asesino que Eligió Ser Amigo / Godspeed",
+      "work": "Hunter x Hunter",
+      "quote": "Gon, tú eres mi luz. Pero a veces brillas con tanta fuerza que me deslumbra y me resulta difícil mirarte.",
+      "quoteContext": "Reflexión silenciosa durante el arco de las Hormigas Quimera, protegiendo a su hermano Alluka.",
+      "whyFavorite": "Nacido y torturado para ser una máquina de matar sin emociones, logró arrancarse las agujas mentales del control familiar para abrazar la amistad, la libertad y convertirse en el protector definitivo de Alluka.",
+      "imageUrl": "https://media.kitsu.app/characters/images/2818/original.jpg",
+      "fallbackImageUrl": "https://media.kitsu.app/characters/images/2818/original.jpg",
+      "themeColor": "#93c5fd",
+      "accentGradient": "from-blue-400 via-cyan-500 to-indigo-900",
+      "badges": ["Godspeed (Kanmuru)", "Clan Zoldyck", "Hermano Protector"],
+      "personalityTraits": ["Leal", "Agudo", "Sensible", "Letal"],
+      "alignment": "Caótico Bueno",
+      "tier": "A+",
+      "vibeSong": {
+        "title": "Hunting for Your Dream",
+        "artist": "Galneryus"
+      },
+      "stats": {
+        "impact": 93,
+        "depth": 98,
+        "aura": 94
+      }
+    },
+    {
+      "id": "rick-sanchez",
+      "rank": 9,
+      "title": "Rick Sanchez",
+      "subtitle": "El Hombre Más Inteligente del Multiverso (C-137)",
+      "work": "Rick and Morty",
+      "quote": "Vivir es arriesgarlo todo. De lo contrario, eres solo un pedazo de materia esperando desintegrarse... sé mejor que yo.",
+      "quoteContext": "Acelerando por dimensiones infinitas mientras oculta el dolor de perder su realidad original.",
+      "whyFavorite": "Ciencia ficción en su máxima expresión existencialista: si todo es infinito y nada importa, lo único que tiene sentido real es cómo tratas a las pocas personas que decides mantener en tu órbita.",
+      "imageUrl": "https://static.wikia.nocookie.net/rickandmorty/images/a/a6/Rick_Sanchez.png",
+      "fallbackImageUrl": "https://media.kitsu.app/characters/images/14994/original.jpg",
+      "themeColor": "#4ade80",
+      "accentGradient": "from-emerald-400 via-lime-600 to-teal-950",
+      "badges": ["Curva Finita Central", "Pistola de Portales", "Nihilismo Optimista"],
+      "personalityTraits": ["Genio Caótico", "Cínico", "Solitario", "Profundo"],
+      "alignment": "Caótico Neutral",
+      "tier": "A+",
+      "vibeSong": {
+        "title": "Look on Down from the Bridge",
+        "artist": "Mazzy Star"
+      },
+      "stats": {
+        "impact": 96,
+        "depth": 91,
+        "aura": 95
+      }
+    },
+    {
+      "id": "x-to-be-hero-x",
+      "rank": 10,
+      "title": "X",
+      "subtitle": "El Héroe Rango 1 / La Forma Blanca",
+      "work": "To Be Hero X",
+      "quote": "En un mundo donde la confianza de las masas define el poder, la verdadera supremacía nace del silencio.",
+      "quoteContext": "En su transformación blanca dominante frente a las cámaras de la liga de héroes.",
+      "whyFavorite": "Estética visual y cinemática demoledora. Su transformación en blanco espectral y su aura de calma absoluta frente a la fanfarria mediática encapsula el concepto de misterio y poder definitivo.",
+      "imageUrl": "https://tbhx.net/assets/img/character/main/chara1.png",
+      "fallbackImageUrl": "https://tbhx.net/assets/img/character/thumb/chara_thumb1.jpg",
+      "themeColor": "#f1f5f9",
+      "accentGradient": "from-white via-zinc-400 to-black",
+      "badges": ["Rango 1 Supremo", "Forma Blanca", "Aura Espectral"],
+      "personalityTraits": ["Enigmático", "Impasible", "Supremo"],
+      "alignment": "Neutral Verdadero",
+      "tier": "S+",
+      "vibeSong": {
+        "title": "To Be Hero X - Theme Concept",
+        "artist": "Hiroyuki Sawano"
+      },
+      "stats": {
+        "impact": 92,
+        "depth": 85,
+        "aura": 100
+      }
+    },
+    {
+      "id": "spiderman-peter-parker",
+      "rank": 11,
+      "title": "Spider-Man (Peter Parker)",
+      "subtitle": "El Amigable Vecino / Mención de Honor Eterna",
+      "work": "Marvel Comics / Universo Cinematográfico",
+      "quote": "Un gran poder conlleva una gran responsabilidad.",
+      "quoteContext": "La enseñanza imperecedera del Tío Ben que guía cada decisión de su vida.",
+      "whyFavorite": "El héroe definitivo del pueblo: a pesar de que la vida personal, financiera y amorosa le dé la espalda, siempre se levanta cuando suena una sirena. La personificación del heroísmo genuino sin gloria personal.",
+      "imageUrl": "https://static.wikia.nocookie.net/marveldatabase/images/7/71/Peter_Parker_%28Earth-616%29_from_Amazing_Spider-Man_Vol_5_15_Cover.jpg",
+      "fallbackImageUrl": "https://media.kitsu.app/characters/images/84805/original.jpg",
+      "themeColor": "#ef4444",
+      "accentGradient": "from-red-500 via-rose-600 to-blue-800",
+      "badges": ["Mención de Honor", "El Más Humano", "Responsabilidad"],
+      "personalityTraits": ["Altruista", "Resiliente", "Ingenioso", "Incorruptible"],
+      "alignment": "Héroe Puro",
+      "tier": "Honor",
+      "isHonorary": true,
+      "vibeSong": {
+        "title": "What's Up Danger",
+        "artist": "Blackway & Black Caviar"
+      },
+      "stats": {
+        "impact": 100,
+        "depth": 97,
+        "aura": 96
+      }
+    }
+  ]
+}

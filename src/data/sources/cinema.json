@@ -1,0 +1,56 @@
+{
+  "id": "cinema",
+  "name": "Cine & Series de Culto",
+  "shortName": "Cine & Series",
+  "subtitle": "Fotografía, guion y dirección que congelaron el tiempo",
+  "description": "Historias cinematográficas que transformaron mi visión sobre el tiempo, el amor y la condición humana.",
+  "icon": "Film",
+  "accentColor": "#ec4899",
+  "gradient": "from-pink-500 via-rose-500 to-amber-500",
+  "tags": ["Ciencia Ficción", "Dirección", "Drama", "Fotografía"],
+  "lastUpdated": "2026-09-02",
+  "items": [
+    {
+      "id": "interstellar",
+      "rank": 1,
+      "title": "Interstellar",
+      "subtitle": "El Amor Trascendiendo Dimensiones",
+      "work": "Christopher Nolan / Hans Zimmer",
+      "quote": "El amor no es algo que hayamos inventado... es cuantificable, es lo único que somos capaces de percibir que trasciende las dimensiones del tiempo y del espacio.",
+      "quoteContext": "Dra. Amelia Brand en la nave Endurance.",
+      "whyFavorite": "La perfecta fusión entre astrofísica rigurosa, la majestuosa partitura de Hans Zimmer y el amor de un padre por su hija a través de los siglos.",
+      "imageUrl": "https://image.tmdb.org/t/p/w780/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+      "themeColor": "#38bdf8",
+      "accentGradient": "from-sky-400 via-indigo-600 to-black",
+      "badges": ["Obra Maestra", "Hans Zimmer", "Espacio-Tiempo"],
+      "personalityTraits": ["Sobrecogedor", "Científico", "Emotivo"],
+      "tier": "S+",
+      "vibeSong": {
+        "title": "Cornfield Chase / Stay",
+        "artist": "Hans Zimmer"
+      },
+      "stats": { "impact": 100, "depth": 99, "aura": 100 }
+    },
+    {
+      "id": "blade-runner-2049",
+      "rank": 2,
+      "title": "Blade Runner 2049",
+      "subtitle": "Más Humano que los Humanos",
+      "work": "Denis Villeneuve / Roger Deakins",
+      "quote": "Morir por una causa justa... es lo más humano que podemos hacer.",
+      "quoteContext": "K (Joe) en los escalones cubiertos de nieve.",
+      "whyFavorite": "Fotografía que roza lo divino por Roger Deakins y una reflexión melancólica sobre qué nos hace verdaderamente conscientes y dignos de amar.",
+      "imageUrl": "https://image.tmdb.org/t/p/w780/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg",
+      "themeColor": "#f97316",
+      "accentGradient": "from-amber-500 via-orange-600 to-slate-950",
+      "badges": ["Cyberpunk Poético", "Roger Deakins", "Atmósfera"],
+      "personalityTraits": ["Contemplativo", "Melancólico", "Estético"],
+      "tier": "S",
+      "vibeSong": {
+        "title": "Tears in the Rain 2049",
+        "artist": "Hans Zimmer & Benjamin Wallfisch"
+      },
+      "stats": { "impact": 96, "depth": 98, "aura": 99 }
+    }
+  ]
+}

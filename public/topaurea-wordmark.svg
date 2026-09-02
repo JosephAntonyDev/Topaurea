@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 80" fill="none">
+  <defs>
+    <linearGradient id="wmBg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#131422" />
+      <stop offset="100%" stop-color="#08080d" />
+    </linearGradient>
+    <linearGradient id="wmBorder" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.16" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.04" />
+    </linearGradient>
+    <linearGradient id="wmGradient" x1="16" y1="12" x2="52" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#818cf8" />
+      <stop offset="50%" stop-color="#c084fc" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+    <linearGradient id="starWm" x1="28" y1="12" x2="44" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#c084fc" />
+    </linearGradient>
+  </defs>
+
+  <!-- Left Icon Emblem (64x64 scaled inside 80 height) -->
+  <g transform="translate(8, 8)">
+    <rect x="0" y="0" width="64" height="64" rx="18" fill="url(#wmBg)" stroke="url(#wmBorder)" stroke-width="1.2" />
+    <!-- T Beam -->
+    <path d="M 16 28 C 16 26.5 17.5 26 19.5 26 L 44.5 26 C 46.5 26 48 26.5 48 28 C 48 29.5 46.5 30.5 44.5 30.5 L 19.5 30.5 C 17.5 30.5 16 29.5 16 28 Z" fill="url(#wmGradient)" />
+    <!-- T Pillar -->
+    <rect x="29" y="30" width="6" height="22" rx="3" fill="url(#wmGradient)" />
+    <!-- Áurea Star -->
+    <path d="M 32 10 C 32 14 34.5 16.5 38.5 17 C 34.5 17.5 32 20 32 24 C 32 20 29.5 17.5 25.5 17 C 29.5 16.5 32 14 32 10 Z" fill="url(#starWm)" />
+    <circle cx="32" cy="17" r="1.2" fill="#ffffff" />
+  </g>
+
+  <!-- Typography: Topáurea -->
+  <text x="86" y="47" font-family="-apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', 'Segoe UI', sans-serif" font-size="30" font-weight="800" fill="#ffffff" letter-spacing="-0.03em">Top<tspan fill="#818cf8" font-weight="700">áurea</tspan></text>
+
+  <!-- Subtitle / Descriptor Badge -->
+  <rect x="250" y="27" width="46" height="18" rx="4" fill="#6366f1" fill-opacity="0.15" stroke="#6366f1" stroke-opacity="0.3" stroke-width="1" />
+  <text x="273" y="39.5" font-family="'JetBrains Mono', 'Fira Code', monospace" font-size="9" font-weight="700" fill="#a5b4fc" text-anchor="middle" letter-spacing="0.08em">VAULT</text>
+
+  <!-- Tagline -->
+  <text x="88" y="62" font-family="-apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="500" fill="#94a3b8" letter-spacing="0.06em">SANTUARIO DE COSAS FAVORITAS</text>
+</svg>
