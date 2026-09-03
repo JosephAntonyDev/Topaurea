@@ -84,7 +84,7 @@ export function App() {
   }, [categories]);
 
   return (
-    <div className="min-h-screen bg-[#07080c] text-zinc-100 flex flex-col selection:bg-indigo-500/30 selection:text-white">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#07080c] text-zinc-100 flex flex-col selection:bg-indigo-500/30 selection:text-white">
       {/* Dynamic Island Floating Header */}
       <Navbar
         onOpenShare={() => setIsShareModalOpen(true)}

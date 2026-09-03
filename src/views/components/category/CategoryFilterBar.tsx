@@ -48,8 +48,8 @@ export const CategoryFilterBar: React.FC<CategoryFilterBarProps> = ({
   }, []);
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-4 space-y-4">
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+    <div className="w-full max-w-7xl mx-auto px-3 sm:px-8 py-3 sm:py-4 space-y-3 sm:space-y-4">
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4">
         {/* Search Bar with Accessible Label & Compliant Contrast */}
         <div className="relative flex-1 max-w-lg">
           <label htmlFor="top-search-input" className="sr-only">
@@ -62,9 +62,9 @@ export const CategoryFilterBar: React.FC<CategoryFilterBarProps> = ({
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Buscar por personaje, obra, frase célebre o aura..."
+            placeholder="Buscar personaje, obra o cita..."
             aria-label="Buscar en este Top"
-            className="w-full min-h-[44px] pl-10 pr-9 py-2.5 rounded-2xl bg-zinc-900/90 border border-white/15 text-white placeholder-zinc-400 text-xs sm:text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400/30 transition-all"
+            className="w-full min-h-[42px] sm:min-h-[44px] pl-10 pr-9 py-2.5 rounded-2xl bg-zinc-900/90 border border-white/15 text-white placeholder-zinc-400 text-xs sm:text-sm focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400/30 transition-all"
           />
           {searchQuery && (
             <button

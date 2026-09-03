@@ -18,10 +18,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   currentCategoryName
 }) => {
   return (
-    <header className="sticky top-4 z-40 w-full px-4 sm:px-8 max-w-7xl mx-auto">
+    <header className="sticky top-2 sm:top-4 z-40 w-full px-3 sm:px-8 max-w-7xl mx-auto">
       <nav
         aria-label="Barra de navegación principal"
-        className="glass-panel rounded-2xl px-4 py-3 flex items-center justify-between shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] border border-white/10"
+        className="glass-panel rounded-2xl px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] border border-white/10"
       >
         {/* Brand & Active Category */}
         <button
@@ -29,30 +29,31 @@ export const Navbar: React.FC<NavbarProps> = ({
           onClick={onOpenBrandKit}
           title="Ver y descargar Kit de Marca oficial (SVG & PNG)"
           aria-label="Topáurea — Ver Kit de Marca oficial"
-          className="flex items-center gap-3 text-left group rounded-xl p-1 -m-1 focus-visible:ring-2 focus-visible:ring-indigo-400 transition-all hover:opacity-90"
+          className="flex items-center gap-2 sm:gap-3 text-left group rounded-xl p-1 -m-1 focus-visible:ring-2 focus-visible:ring-indigo-400 transition-all hover:opacity-90 shrink-0"
         >
-          <TopaureaLogo variant="icon" size="md" className="group-hover:scale-105 transition-transform" />
+          <TopaureaLogo variant="icon" size="sm" className="sm:hidden group-hover:scale-105 transition-transform" />
+          <TopaureaLogo variant="icon" size="md" className="hidden sm:flex group-hover:scale-105 transition-transform" />
           <div>
-            <div className="flex items-center gap-2">
-              <span className="font-extrabold tracking-tight text-white text-base sm:text-lg">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="font-extrabold tracking-tight text-white text-sm sm:text-lg">
                 Top<span className="text-indigo-400">áurea</span>
               </span>
-              <span className="text-xs uppercase font-mono tracking-wider px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 group-hover:bg-indigo-500/30 transition-colors">
+              <span className="text-[10px] sm:text-xs uppercase font-mono tracking-wider px-1.5 sm:px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 group-hover:bg-indigo-500/30 transition-colors">
                 PRO
               </span>
             </div>
-            <p className="text-xs text-zinc-300 hidden sm:block">
+            <p className="text-xs text-zinc-300 hidden md:block">
               Santuario de Cosas Favoritas • <span className="text-white font-medium">{currentCategoryName}</span>
             </p>
           </div>
         </button>
 
-        {/* Action Buttons with minimum 44px touch targets */}
-        <div className="flex items-center gap-2">
+        {/* Action Buttons */}
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           <button
             type="button"
             onClick={onFocusSearch}
-            className="flex items-center gap-2 min-h-[44px] px-3.5 py-2 text-xs font-medium text-zinc-200 hover:text-white bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all focus-visible:ring-2 focus-visible:ring-indigo-400"
+            className="flex items-center justify-center gap-2 min-h-[40px] min-w-[40px] sm:min-h-[44px] px-2.5 sm:px-3.5 py-2 text-xs font-medium text-zinc-200 hover:text-white bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all focus-visible:ring-2 focus-visible:ring-indigo-400"
             title="Buscar en este Top (Presiona / para buscar)"
             aria-label="Buscar personajes y citas en este top"
           >
@@ -66,19 +67,19 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             type="button"
             onClick={onOpenAddCategory}
-            className="flex items-center gap-2 min-h-[44px] px-3.5 py-2 text-xs font-medium text-zinc-200 hover:text-white bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all focus-visible:ring-2 focus-visible:ring-indigo-400"
+            className="flex items-center justify-center gap-2 min-h-[40px] min-w-[40px] sm:min-h-[44px] px-2.5 sm:px-3.5 py-2 text-xs font-medium text-zinc-200 hover:text-white bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all focus-visible:ring-2 focus-visible:ring-indigo-400"
             title="Crear o Agregar nueva categoría"
             aria-label="Agregar nueva categoría"
           >
             <Plus className="w-4 h-4 text-indigo-400" aria-hidden="true" />
-            <span className="hidden sm:inline">Nueva Categoría</span>
+            <span className="hidden sm:inline">Nueva</span>
           </button>
 
           {onOpenBrandKit && (
             <button
               type="button"
               onClick={onOpenBrandKit}
-              className="flex items-center gap-2 min-h-[44px] px-3.5 py-2 text-xs font-medium text-zinc-200 hover:text-white bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all focus-visible:ring-2 focus-visible:ring-indigo-400"
+              className="flex items-center justify-center gap-2 min-h-[40px] min-w-[40px] sm:min-h-[44px] px-2.5 sm:px-3.5 py-2 text-xs font-medium text-zinc-200 hover:text-white bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all focus-visible:ring-2 focus-visible:ring-indigo-400"
               title="Ver y descargar logos oficiales (SVG & PNG)"
               aria-label="Descargar logos y recursos de marca"
             >
@@ -90,14 +91,16 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             type="button"
             onClick={onOpenShare}
-            className="flex items-center gap-2 min-h-[44px] px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl shadow-[0_0_20px_rgba(99,102,241,0.3)] transition-all transform hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-indigo-400"
+            className="flex items-center justify-center gap-2 min-h-[40px] sm:min-h-[44px] px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 rounded-xl shadow-[0_0_20px_rgba(99,102,241,0.3)] transition-all transform hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-indigo-400"
             aria-label="Abrir modal para compartir este top"
           >
             <Share2 className="w-4 h-4" aria-hidden="true" />
-            <span>Compartir Top</span>
+            <span className="hidden sm:inline">Compartir</span>
           </button>
         </div>
       </nav>
     </header>
   );
 };
+
+export default Navbar;

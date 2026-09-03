@@ -39,8 +39,8 @@ export const CategoryNav: React.FC<CategoryNavProps> = ({
   };
 
   return (
-    <nav aria-label="Categorías disponibles" className="w-full max-w-7xl mx-auto px-4 sm:px-8 pt-4 pb-2">
-      <div className="flex items-center justify-between gap-4 overflow-x-auto pb-2 scrollbar-none">
+    <nav aria-label="Categorías disponibles" className="w-full max-w-7xl mx-auto px-3 sm:px-8 pt-3 sm:pt-4 pb-2">
+      <div className="flex items-center justify-between gap-3 overflow-x-auto pb-2 scrollbar-none">
         <div role="tablist" aria-label="Pestañas de Tops" className="flex items-center gap-2 p-1.5 rounded-2xl glass-panel border border-white/10">
           {categories.map((cat) => {
             const isActive = cat.id === activeCategoryId;
