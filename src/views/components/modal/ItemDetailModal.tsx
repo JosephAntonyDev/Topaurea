@@ -207,7 +207,7 @@ export const ItemDetailModal: React.FC<ItemDetailModalProps> = ({
                   <span className="text-xs font-mono uppercase tracking-wider text-zinc-300 font-semibold block">
                     Métricas de Resonancia
                   </span>
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4">
                     <StatBar label="Impacto" value={item.stats.impact} color="#6366f1" />
                     <StatBar label="Profundidad" value={item.stats.depth} color="#a855f7" />
                     <StatBar label="Aura" value={item.stats.aura} color="#ec4899" />
