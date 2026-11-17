@@ -7,7 +7,13 @@
   "icon": "Gamepad2",
   "accentColor": "#10b981",
   "gradient": "from-emerald-500 via-teal-500 to-cyan-600",
-  "tags": ["Mundo Abierto", "Narrativa", "Lore", "Arte", "Música"],
+  "tags": [
+    "Mundo Abierto",
+    "Narrativa",
+    "Lore",
+    "Arte",
+    "Música"
+  ],
   "lastUpdated": "2026-09-02",
   "items": [
     {
@@ -19,17 +25,29 @@
       "quote": "Que el caos tome el mundo... o que el nuevo Sinluz forje una era de estrellas.",
       "quoteContext": "Ranni la Bruja y el destino del Círculo de Elden.",
       "whyFavorite": "La máxima expresión de libertad, diseño de niveles no intrusivo y atmósfera en la historia del videojuego contemporáneo.",
-      "imageUrl": "https://image.api.playstation.com/vulcan/ap/rnd/202110/2000/phvVT0qtZfcR25a8AcAcAeBt.png",
+      "imageUrl": "/artwork/elden-ring.jpg",
       "themeColor": "#fbbf24",
       "accentGradient": "from-amber-400 via-yellow-600 to-stone-900",
-      "badges": ["Juego de la Década", "Dark Fantasy", "Dirección Artística"],
-      "personalityTraits": ["Inmersivo", "Desafiante", "Misterioso"],
+      "badges": [
+        "Juego de la Década",
+        "Dark Fantasy",
+        "Dirección Artística"
+      ],
+      "personalityTraits": [
+        "Inmersivo",
+        "Desafiante",
+        "Misterioso"
+      ],
       "tier": "S+",
       "vibeSong": {
         "title": "The Final Battle / Radagon",
         "artist": "Tsukasa Saitoh"
       },
-      "stats": { "impact": 99, "depth": 100, "aura": 100 }
+      "stats": {
+        "impact": 99,
+        "depth": 100,
+        "aura": 100
+      }
     },
     {
       "id": "red-dead-redemption-2",
@@ -40,17 +58,29 @@
       "quote": "Le di todo lo que tenía a esta banda... pero ahora sé que hay que intentar ser un buen hombre cuando aún queda tiempo.",
       "quoteContext": "Arthur Morgan mirando el amanecer en la montaña.",
       "whyFavorite": "El estudio de personajes y la recreación de un mundo vivo más deslumbrante jamás programado.",
-      "imageUrl": "https://image.api.playstation.com/cdn/UP1004/CUSA03041_00/Hpl5MtwQgOVFBxmAcKOPFlPfItqBushT.png",
+      "imageUrl": "/artwork/red-dead-redemption-2.jpg",
       "themeColor": "#f97316",
       "accentGradient": "from-orange-500 via-red-700 to-neutral-900",
-      "badges": ["Narrativa Pura", "Detalle Obsesivo", "Amanecer"],
-      "personalityTraits": ["Melancólico", "Realista", "Épico"],
+      "badges": [
+        "Narrativa Pura",
+        "Detalle Obsesivo",
+        "Amanecer"
+      ],
+      "personalityTraits": [
+        "Melancólico",
+        "Realista",
+        "Épico"
+      ],
       "tier": "S+",
       "vibeSong": {
         "title": "May I? Stand Unshaken",
         "artist": "D'Angelo"
       },
-      "stats": { "impact": 98, "depth": 99, "aura": 97 }
+      "stats": {
+        "impact": 98,
+        "depth": 99,
+        "aura": 97
+      }
     },
     {
       "id": "nier-automata",
@@ -61,17 +91,29 @@
       "quote": "¿Un futuro sin significado vale la pena ser vivido? Incluso en un ciclo de desesperación, elegimos resistir.",
       "quoteContext": "Créditos interactivos finales del final E.",
       "whyFavorite": "Una catarsis filosófica que solo funciona porque es un videojuego. La música de Keiichi Okabe es patrimonio de la humanidad.",
-      "imageUrl": "https://image.api.playstation.com/vulcan/img/rnd/202010/2723/46uQeX7K393Jz556gG4gK8Wc.png",
+      "imageUrl": "/artwork/nier-automata.jpg",
       "themeColor": "#e2e8f0",
       "accentGradient": "from-slate-200 via-zinc-500 to-black",
-      "badges": ["Filosofía Existencial", "Banda Sonora Celestial", "Metaficción"],
-      "personalityTraits": ["Existencial", "Conmovedor", "Único"],
+      "badges": [
+        "Filosofía Existencial",
+        "Banda Sonora Celestial",
+        "Metaficción"
+      ],
+      "personalityTraits": [
+        "Existencial",
+        "Conmovedor",
+        "Único"
+      ],
       "tier": "S",
       "vibeSong": {
         "title": "Weight of the World",
         "artist": "Keiichi Okabe"
       },
-      "stats": { "impact": 95, "depth": 100, "aura": 96 }
+      "stats": {
+        "impact": 95,
+        "depth": 100,
+        "aura": 96
+      }
     }
   ]
 }

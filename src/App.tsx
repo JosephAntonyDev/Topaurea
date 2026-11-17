@@ -1,348 +1,129 @@
-import { useState, useMemo } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { ArrowDown, ArrowDownUp, ArrowRight, ArrowUpRight, Bookmark, Check, ChevronRight, Film, Gamepad2, Grid2X2, Heart, Layers3, List, Menu, Plus, Search, SlidersHorizontal, Sparkles, Trophy, Users, X } from 'lucide-react';
 import { useCategoryViewModel } from './viewmodels/useCategoryViewModel';
 import { useItemDetailViewModel } from './viewmodels/useItemDetailViewModel';
-import { Navbar } from './views/components/layout/Navbar';
-import { HeroSpotlight } from './views/components/layout/HeroSpotlight';
-import { CategoryNav } from './views/components/category/CategoryNav';
-import { CategoryFilterBar } from './views/components/category/CategoryFilterBar';
-import { ItemCard } from './views/components/items/ItemCard';
-import { PodiumView } from './views/components/items/PodiumView';
-import { CompactListView } from './views/components/items/CompactListView';
-import { ItemDetailModal } from './views/components/modal/ItemDetailModal';
-import { ShareTopModal } from './views/components/modal/ShareTopModal';
-import { AddCategoryModal } from './views/components/modal/AddCategoryModal';
-import { BrandAssetsModal } from './views/components/modal/BrandAssetsModal';
-import { Footer } from './views/components/layout/Footer';
-import { SearchX, Sparkles, Heart, Plus, AlertCircle, RefreshCw } from 'lucide-react';
+import type { TopItem } from './domain/models/TopItem';
+import { Artwork, BrandMark } from './views/components/editorial/Identity';
+import { CollectionDialogs } from './views/components/editorial/CollectionDialogs';
+import './App.css';
+
+const categoryIcons = { characters: Users, videogames: Gamepad2, cinema: Film };
+const categoryCopy: Record<string, { title: string; emphasis: string; description: string }> = {
+  characters: { title: 'Personajes que', emphasis: 'dejan huella.', description: 'Héroes imperfectos. Mentes extraordinarias. Historias que se quedan contigo.' },
+  videogames: { title: 'Mundos para', emphasis: 'perderse.', description: 'Más que una partida. Lugares, historias y aventuras a los que siempre volvería.' },
+  cinema: { title: 'Historias para', emphasis: 'quedarse.', description: 'Una escena, una banda sonora, una forma distinta de mirar el mundo.' },
+};
 
 export function App() {
-  // Detail & Favorites ViewModel
-  const {
-    selectedItem,
-    openDetail,
-    closeDetail,
-    toggleFavorite,
-    isFavorite,
-    copyQuote,
-    copiedQuote,
-    copyFullTopSummary,
-    copiedShareCard,
-    generateShareText
-  } = useItemDetailViewModel();
+  const detail = useItemDetailViewModel();
+  const vm = useCategoryViewModel('characters', detail.favoriteIds);
+  const [dialog, setDialog] = useState<'share' | 'create' | 'brand' | 'about' | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [toast, setToast] = useState('');
+  const [pendingDelete, setPendingDelete] = useState(false);
+  const total = vm.categories.reduce((sum, category) => sum + category.items.length, 0);
+  const copy = categoryCopy[vm.activeCategoryId] || { title: 'Un universo', emphasis: 'muy tuyo.', description: vm.currentCategory?.description || 'Cada favorito tiene una historia. Este es su lugar.' };
+  const feature = vm.top1Item;
 
-  // Get current stored favorites from localStorage for filtering
-  const favoriteIds = useMemo(() => {
-    try {
-      const saved = localStorage.getItem('topaurea_favorites') || localStorage.getItem('auravault_favorites');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  }, [selectedItem, isFavorite]);
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement;
+      if (event.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName) && !target.isContentEditable && !document.querySelector('dialog[open]')) {
+        event.preventDefault(); document.getElementById('top-search-input')?.focus();
+      }
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+  useEffect(() => {
+    if (!toast) return;
+    const timer = window.setTimeout(() => setToast(''), 2800);
+    return () => window.clearTimeout(timer);
+  }, [toast]);
 
-  // Categories ViewModel (MVVM)
-  const {
-    categories,
-    currentCategory,
-    activeCategoryId,
-    setActiveCategoryId,
-    searchQuery,
-    setSearchQuery,
-    selectedTag,
-    setSelectedTag,
-    sortBy,
-    setSortBy,
-    viewMode,
-    setViewMode,
-    showFavoritesOnly,
-    setShowFavoritesOnly,
-    categoryFavoritesCount,
-    isLoading,
-    errorMessage,
-    displayItems,
-    top1Item,
-    availableTags,
-    addNewCategory,
-    deleteCategory,
-    refreshCategories
-  } = useCategoryViewModel('characters', favoriteIds);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const sidebar = document.querySelector<HTMLElement>('.sidebar');
+    const controls = () => Array.from(sidebar?.querySelectorAll<HTMLElement>('a, button') || []);
+    controls()[0]?.focus();
+    const onTab = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab') return;
+      const elements = controls();
+      const first = elements[0];
+      const last = elements.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', onTab);
+    return () => { document.removeEventListener('keydown', onTab); document.body.style.overflow = previousOverflow; previousFocus?.focus(); };
+  }, [menuOpen]);
 
-  // Modals state
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
-  const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
-  const [isBrandModalOpen, setIsBrandModalOpen] = useState(false);
-
-  // Focus search shortcut
-  const handleFocusSearch = () => {
-    const input = document.getElementById('top-search-input') as HTMLInputElement;
-    input?.focus();
+  const selectCategory = (id: string) => {
+    vm.setActiveCategoryId(id); vm.setSelectedTag(null); vm.setSearchQuery(''); vm.setShowFavoritesOnly(false); setMenuOpen(false); setPendingDelete(false);
   };
-
-  const totalAllItems = useMemo(() => {
-    return categories.reduce((acc, cat) => acc + cat.items.length, 0);
-  }, [categories]);
+  const favorite = (id: string) => {
+    setToast(detail.isFavorite(id) ? 'Eliminado de tus favoritos' : 'Guardado en tus favoritos'); detail.toggleFavorite(id);
+  };
+  const renderCard = (item: TopItem, index: number) => (
+    <article className="collection-card" key={item.id} style={{ animationDelay: `${Math.min(index, 7) * 45}ms` }}>
+      <div className={`card-artwork artwork-tone-${index % 4}`}>
+        <button className="artwork-link" onClick={() => detail.openDetail(item)} aria-label={`Explorar ${item.title}`}><Artwork item={item} /></button>
+        <span className="card-position">{item.isHonorary ? 'Mención especial' : `Nº ${String(item.rank).padStart(2, '0')}`}</span>
+        <button className={`save-button ${detail.isFavorite(item.id) ? 'is-saved' : ''}`} onClick={() => favorite(item.id)} aria-label={`${detail.isFavorite(item.id) ? 'Quitar' : 'Guardar'} ${item.title} en favoritos`} aria-pressed={detail.isFavorite(item.id)}><Bookmark size={16} fill={detail.isFavorite(item.id) ? 'currentColor' : 'none'} /></button>
+        <span className="artwork-explore">Ver historia <ArrowUpRight size={17} /></span>
+      </div>
+      <div className="card-caption"><span className="eyebrow">{item.work}</span><button onClick={() => detail.openDetail(item)} className="card-title">{item.title}<ArrowUpRight size={18} /></button><p>{item.subtitle}</p><div className="card-bottom"><span>{item.badges[0] || 'Selección personal'}</span><span className="tier-label">{item.tier || 'A'}</span></div></div>
+    </article>
+  );
 
   return (
-    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#07080c] text-zinc-100 flex flex-col selection:bg-indigo-500/30 selection:text-white">
-      {/* Dynamic Island Floating Header */}
-      <Navbar
-        onOpenShare={() => setIsShareModalOpen(true)}
-        onOpenAddCategory={() => setIsAddCategoryModalOpen(true)}
-        onOpenBrandKit={() => setIsBrandModalOpen(true)}
-        onFocusSearch={handleFocusSearch}
-        currentCategoryName={currentCategory?.name || 'Top'}
-      />
-
-      {/* Hero Spotlight (Top 1 of current active category) */}
-      {!isLoading && !errorMessage && !showFavoritesOnly && (
-        <HeroSpotlight item={top1Item} onOpenDetail={openDetail} />
-      )}
-
-      {/* Category Navigation Bar with custom category deletion support */}
-      <CategoryNav
-        categories={categories}
-        activeCategoryId={activeCategoryId}
-        onSelectCategory={(id) => {
-          setActiveCategoryId(id);
-          setSelectedTag(null);
-          setSearchQuery('');
-          setShowFavoritesOnly(false);
-        }}
-        onDeleteCategory={deleteCategory}
-      />
-
-      {/* Category Subtitle & Description Header */}
-      {currentCategory && !isLoading && (
-        <section aria-label="Información de la categoría" className="w-full max-w-7xl mx-auto px-4 sm:px-8 pt-4 pb-2">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b border-white/10">
-            <div>
-              <span className="text-xs font-mono uppercase tracking-wider text-indigo-300 font-semibold flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4" aria-hidden="true" />
-                <span>Colección Personal Activa</span>
-              </span>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
-                {currentCategory.name}
-              </h1>
-              <p className="text-xs sm:text-sm text-zinc-300 mt-1 max-w-2xl leading-relaxed">
-                {currentCategory.description}
-              </p>
-            </div>
-            <div className="text-xs font-mono text-zinc-300">
-              Total listados: <span className="text-white font-bold">{currentCategory.items.length}</span>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Filtering & View Switcher Bar with Favorites Filter */}
-      <CategoryFilterBar
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        tags={availableTags}
-        selectedTag={selectedTag}
-        onSelectTag={setSelectedTag}
-        sortBy={sortBy}
-        onSortChange={setSortBy}
-        viewMode={viewMode}
-        onViewModeChange={setViewMode}
-        itemCount={displayItems.length}
-        showFavoritesOnly={showFavoritesOnly}
-        onToggleFavoritesOnly={() => setShowFavoritesOnly(!showFavoritesOnly)}
-        favoritesCount={categoryFavoritesCount}
-      />
-
-      {/* Main Content Area: Handles Loading, Error, Empty and Success states */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-8 py-6">
-        {/* 1. Loading State: Skeleton Cards */}
-        {isLoading && (
-          <div aria-busy="true" aria-label="Cargando elementos..." className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((n) => (
-              <div
-                key={n}
-                className="rounded-3xl glass-panel p-6 space-y-4 border border-white/10 animate-pulse"
-              >
-                <div className="w-full aspect-[16/10] bg-white/5 rounded-2xl" />
-                <div className="h-4 bg-white/10 rounded w-1/3" />
-                <div className="h-6 bg-white/15 rounded w-3/4" />
-                <div className="h-16 bg-white/5 rounded-xl" />
-                <div className="flex gap-2 pt-2">
-                  <div className="h-6 bg-white/10 rounded-full w-20" />
-                  <div className="h-6 bg-white/10 rounded-full w-16" />
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* 2. Error State: Actionable Error Banner */}
-        {!isLoading && errorMessage && (
-          <div role="alert" className="py-16 flex flex-col items-center justify-center text-center space-y-4">
-            <div className="w-16 h-16 rounded-full bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
-              <AlertCircle className="w-8 h-8" aria-hidden="true" />
-            </div>
-            <div className="space-y-1">
-              <h2 className="text-xl font-bold text-white">Hubo un problema al cargar los datos</h2>
-              <p className="text-xs sm:text-sm text-zinc-300 max-w-md">
-                {errorMessage}
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={refreshCategories}
-              className="flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm font-semibold transition-all focus-visible:ring-2 focus-visible:ring-indigo-400"
-            >
-              <RefreshCw className="w-4 h-4" aria-hidden="true" />
-              <span>Reintentar carga</span>
-            </button>
-          </div>
-        )}
-
-        {/* 3. Empty States: Distinct Contextual Messages */}
-        {!isLoading && !errorMessage && displayItems.length === 0 && (
-          <div className="py-20 flex flex-col items-center justify-center text-center space-y-4">
-            {showFavoritesOnly ? (
-              /* Empty Favorites State */
-              <>
-                <div className="w-16 h-16 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400">
-                  <Heart className="w-8 h-8" aria-hidden="true" />
-                </div>
-                <div className="space-y-1.5">
-                  <h2 className="text-xl font-bold text-white">No tienes favoritos en esta categoría</h2>
-                  <p className="text-xs sm:text-sm text-zinc-300 max-w-md">
-                    Haz clic en el corazón de cualquier personaje u obra para marcarlo como favorito y verlo aquí.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setShowFavoritesOnly(false)}
-                  className="min-h-[44px] px-5 py-2.5 text-xs sm:text-sm font-semibold text-white bg-white/10 hover:bg-white/15 rounded-xl border border-white/20 transition-all focus-visible:ring-2 focus-visible:ring-indigo-400"
-                >
-                  Ver todos los elementos
-                </button>
-              </>
-            ) : searchQuery ? (
-              /* Search Empty State */
-              <>
-                <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400">
-                  <SearchX className="w-8 h-8" aria-hidden="true" />
-                </div>
-                <div className="space-y-1.5">
-                  <h2 className="text-xl font-bold text-white">No se encontraron resultados</h2>
-                  <p className="text-xs sm:text-sm text-zinc-300 max-w-md">
-                    Ningún elemento coincide con tu búsqueda «<span className="text-white font-semibold">{searchQuery}</span>».
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSearchQuery('');
-                    setSelectedTag(null);
-                  }}
-                  className="min-h-[44px] px-5 py-2.5 text-xs sm:text-sm font-semibold text-indigo-300 hover:text-white bg-indigo-500/15 hover:bg-indigo-500/25 rounded-xl border border-indigo-500/30 transition-all focus-visible:ring-2 focus-visible:ring-indigo-400"
-                >
-                  Restablecer búsqueda
-                </button>
-              </>
-            ) : (
-              /* Completely Empty Category State */
-              <>
-                <div className="w-16 h-16 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
-                  <Plus className="w-8 h-8" aria-hidden="true" />
-                </div>
-                <div className="space-y-1.5">
-                  <h2 className="text-xl font-bold text-white">Esta categoría aún no tiene elementos</h2>
-                  <p className="text-xs sm:text-sm text-zinc-300 max-w-md">
-                    Crea o agrega tus personajes u obras favoritas para completar este Top.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setIsAddCategoryModalOpen(true)}
-                  className="min-h-[44px] px-5 py-2.5 text-xs sm:text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl transition-all shadow-[0_0_20px_rgba(99,102,241,0.3)] focus-visible:ring-2 focus-visible:ring-indigo-400"
-                >
-                  Editar o Importar JSON
-                </button>
-              </>
-            )}
-          </div>
-        )}
-
-        {/* 4. Success State: Render items according to viewMode */}
-        {!isLoading && !errorMessage && displayItems.length > 0 && (
-          <AnimatePresence mode="wait">
-            {viewMode === 'cards' && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {displayItems.map((item) => (
-                  <ItemCard
-                    key={item.id}
-                    item={item}
-                    onOpenDetail={openDetail}
-                    isFavorite={isFavorite(item.id)}
-                    onToggleFavorite={toggleFavorite}
-                    onCopyQuote={copyQuote}
-                    hasCopied={copiedQuote}
-                  />
-                ))}
-              </div>
-            )}
-
-            {viewMode === 'podium' && (
-              <PodiumView items={displayItems} onOpenDetail={openDetail} />
-            )}
-
-            {viewMode === 'compact' && (
-              <CompactListView
-                items={displayItems}
-                onOpenDetail={openDetail}
-                onCopyQuote={copyQuote}
-                copiedItemId={null}
-              />
-            )}
-          </AnimatePresence>
-        )}
-      </main>
-
-      {/* Footer with high contrast and readable text */}
-      <Footer
-        totalCategories={categories.length}
-        totalItems={totalAllItems}
-        onOpenBrandKit={() => setIsBrandModalOpen(true)}
-      />
-
-      {/* Item Detail Sheet Modal with Focus Trap and ARIA dialog */}
-      <ItemDetailModal
-        item={selectedItem}
-        onClose={closeDetail}
-        isFavorite={selectedItem ? isFavorite(selectedItem.id) : false}
-        onToggleFavorite={toggleFavorite}
-        onCopyQuote={copyQuote}
-        hasCopiedQuote={copiedQuote}
-      />
-
-      {/* Share Top Modal with direct WhatsApp integration */}
-      <ShareTopModal
-        isOpen={isShareModalOpen}
-        onClose={() => setIsShareModalOpen(false)}
-        category={currentCategory}
-        items={displayItems}
-        onCopySummary={copyFullTopSummary}
-        hasCopied={copiedShareCard}
-        generateText={generateShareText}
-      />
-
-      {/* Add New Category Modal with accessible linked labels */}
-      <AddCategoryModal
-        isOpen={isAddCategoryModalOpen}
-        onClose={() => setIsAddCategoryModalOpen(false)}
-        onAddCategory={addNewCategory}
-      />
-
-      {/* Brand Assets & Logo Kit Modal with SVG & PNG exporters */}
-      <BrandAssetsModal
-        isOpen={isBrandModalOpen}
-        onClose={() => setIsBrandModalOpen(false)}
-      />
+    <div className="app-shell">
+      <a className="skip-link" href="#collection">Ir a la colección</a>
+      {menuOpen && <button className="sidebar-backdrop" aria-label="Cerrar navegación" onClick={() => setMenuOpen(false)} />}
+      <aside className={`sidebar ${menuOpen ? 'sidebar-open' : ''}`}>
+        <a className="brand" href="#" aria-label="Topáurea, inicio" onClick={() => { selectCategory('characters'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}><BrandMark /><span>topáurea<span className="brand-period">.</span></span></a>
+        <div className="sidebar-intro"><span className="status-dot" /> UN ARCHIVO MUY PERSONAL</div>
+        <div className="nav-section-label">TU ESPACIO <span>01—03</span></div>
+        <nav className="main-nav" aria-label="Navegación principal">
+          <button className={!vm.showFavoritesOnly ? 'nav-active' : ''} onClick={() => { vm.setShowFavoritesOnly(false); setMenuOpen(false); }}><Layers3 size={18} /><span>Mi colección</span><span className="nav-count">{total}</span></button>
+          <button className={vm.showFavoritesOnly ? 'nav-active' : ''} onClick={() => { vm.setShowFavoritesOnly(true); vm.setSearchQuery(''); vm.setSelectedTag(null); setMenuOpen(false); }}><Bookmark size={18} /><span>Favoritos</span><span className="nav-count">{detail.favoriteIds.length}</span></button>
+          <button onClick={() => { setDialog('about'); setMenuOpen(false); }}><Sparkles size={18} /><span>El manifiesto</span><ArrowUpRight size={15} /></button>
+        </nav>
+        <div className="nav-section-label collection-label">COLECCIONES <button aria-label="Crear colección" onClick={() => { setMenuOpen(false); setDialog('create'); }}><Plus size={16} /></button></div>
+        <nav className="category-nav" aria-label="Colecciones">{vm.categories.map(category => {
+          const Icon = categoryIcons[category.id as keyof typeof categoryIcons] || Layers3;
+          return <button key={category.id} aria-current={vm.activeCategoryId === category.id ? 'page' : undefined} className={vm.activeCategoryId === category.id ? 'category-active' : ''} onClick={() => selectCategory(category.id)}><Icon size={17} /><span>{category.shortName || category.name}</span><span className="category-count">{String(category.items.length).padStart(2, '0')}</span></button>;
+        })}</nav>
+        <button className="new-collection" onClick={() => { setMenuOpen(false); setDialog('create'); }}><Plus size={16} /> Nueva colección</button>
+        <div className="sidebar-bottom"><div className="personal-note"><BrandMark /><p>Hay cosas que te gustan.<br />Y cosas que <em>te definen.</em></p><span>GUARDA LO QUE IMPORTA.</span></div><button className="profile" onClick={() => setDialog('about')}><span className="profile-avatar">T.</span><span>Mi universo<small>Curado con intención</small></span><ArrowUpRight size={16} /></button></div>
+      </aside>
+      <div className="workspace">
+        <header className="topbar"><div className="breadcrumb"><button className="mobile-menu icon-button" aria-label="Abrir navegación" onClick={() => setMenuOpen(true)}><Menu size={21} /></button><span>Mi universo</span><ChevronRight size={13} /><strong>{vm.showFavoritesOnly ? 'Favoritos' : vm.currentCategory?.shortName || 'Mi colección'}</strong></div><div className="topbar-actions"><span className="local-status"><span className="status-dot" /> Tu espacio, a tu ritmo</span><button className="share-top" onClick={() => setDialog('share')}>Compartir colección <ArrowUpRight size={16} /></button></div></header>
+        <main className="main-content">
+          <section className="page-intro"><div><div className="eyebrow intro-eyebrow"><span className="tiny-star">✳</span> EL ARCHIVO DE LO EXTRAORDINARIO</div><h1>{vm.showFavoritesOnly ? 'Siempre entre ' : `${copy.title} `}<em>{vm.showFavoritesOnly ? 'mis favoritos.' : copy.emphasis}</em></h1><p>{vm.showFavoritesOnly ? 'Una selección dentro de la selección. Eso que merece un lugar especial.' : copy.description}</p></div><a className="intro-scroll" href="#collection" aria-label="Explorar colección"><ArrowDown size={21} /></a></section>
+          {!vm.showFavoritesOnly && feature && !vm.isLoading && <section className={`feature feature-${vm.activeCategoryId}`} aria-label="La selección destacada" key={feature.id}>
+            <div className="feature-copy"><div className="feature-kicker"><span className="feature-dot" /> LA JOYA DE LA COLECCIÓN<span className="feature-edition">VOL. {String(vm.categories.findIndex(c => c.id === vm.activeCategoryId) + 1).padStart(2, '0')}</span></div><div className="feature-work">{feature.work}</div><h2>{feature.title}<span>.</span></h2><p className="feature-subtitle">{feature.subtitle}</p><blockquote>“{feature.quote}”</blockquote><button className="button button-yellow" onClick={() => detail.openDetail(feature)}>Descubrir su historia <ArrowUpRight size={18} /></button><div className="feature-footnote"><span>SELECCIÓN PERSONAL</span><span>{feature.tier || 'S'} TIER <span className="small-dot">·</span> Nº 01</span></div></div>
+            <button className="feature-art" onClick={() => detail.openDetail(feature)} aria-label={`Ver la historia de ${feature.title}`}><span className="feature-orbit" /><span className="feature-number" aria-hidden="true">01</span><Artwork item={feature} priority /><span className="feature-art-caption"><span>{feature.alignment || 'Una obra para recordar'}</span><ArrowUpRight size={20} /></span><span className="curator-seal" aria-hidden="true">THE PERSONAL<br /><b>✳</b><br />COLLECTION</span></button>
+          </section>}
+          <section id="collection" className="collection-section" aria-label="Colección">
+            <div className="collection-heading"><div><span className="eyebrow">BUEN GUSTO. CERO ALGORITMOS.</span><h2>{vm.showFavoritesOnly ? 'Mis favoritos' : 'La colección'}<span>({String(vm.displayItems.length).padStart(2, '0')})</span></h2></div><div className="view-options" role="group" aria-label="Vista de la colección"><button title="Cuadrícula" aria-label="Vista de cuadrícula" aria-pressed={vm.viewMode === 'cards'} onClick={() => vm.setViewMode('cards')}><Grid2X2 size={17} /></button><button title="Lista" aria-label="Vista de lista" aria-pressed={vm.viewMode === 'compact'} onClick={() => vm.setViewMode('compact')}><List size={19} /></button><button title="Podio" aria-label="Vista de podio" aria-pressed={vm.viewMode === 'podium'} onClick={() => vm.setViewMode('podium')}><Trophy size={17} /></button></div></div>
+            <div className="collection-toolbar"><label className="search-field"><Search size={17} /><input id="top-search-input" value={vm.searchQuery} onChange={event => vm.setSearchQuery(event.target.value)} placeholder={`Buscar en ${vm.currentCategory?.shortName.toLocaleLowerCase() || 'esta colección'}…`} aria-label="Buscar en esta colección" />{vm.searchQuery ? <button aria-label="Borrar búsqueda" onClick={() => vm.setSearchQuery('')}><X size={15} /></button> : <kbd>/</kbd>}</label><div className="toolbar-controls"><label className="sort-control"><ArrowDownUp size={15} /><select aria-label="Orden de la colección" value={vm.sortBy} onChange={event => vm.setSortBy(event.target.value as 'rank' | 'name' | 'work')}><option value="rank">Por ranking</option><option value="name">Por nombre</option><option value="work">Por obra</option></select></label><button className={`filter-button ${filtersOpen || vm.selectedTag ? 'filter-active' : ''}`} onClick={() => setFiltersOpen(!filtersOpen)} aria-expanded={filtersOpen}><SlidersHorizontal size={16} /><span>Filtros</span>{vm.selectedTag && <span className="filter-dot" />}</button></div></div>
+            {filtersOpen && <div className="filter-tags"><span>Explorar por</span><button className={!vm.selectedTag ? 'tag-selected' : ''} onClick={() => vm.setSelectedTag(null)}>Todo</button>{vm.availableTags.map(tag => <button key={tag} className={vm.selectedTag === tag ? 'tag-selected' : ''} onClick={() => vm.setSelectedTag(vm.selectedTag === tag ? null : tag)}>{tag}</button>)}</div>}
+            <div className="collection-meta"><span>{vm.currentCategory?.shortName}<span className="meta-divider">/</span>{vm.displayItems.length} {vm.displayItems.length === 1 ? 'imprescindible' : 'imprescindibles'}{vm.showFavoritesOnly ? ' guardados' : ''}</span><span>Una lista subjetiva. Como debe ser.</span></div>
+            {vm.isLoading ? <div className="loading-state" role="status">Abriendo el archivo…</div> : vm.errorMessage ? <div className="empty-state" role="alert"><h3>No pudimos abrir la colección.</h3><p>{vm.errorMessage}</p><button className="button button-dark" onClick={vm.refreshCategories}>Volver a intentar</button></div> : vm.displayItems.length === 0 ? <div className="empty-state"><Search size={30} /><h3>{vm.searchQuery || vm.selectedTag ? 'Todavía no encontramos esa joya.' : vm.showFavoritesOnly ? 'Tus próximos favoritos están aquí.' : 'El inicio de una gran colección.'}</h3><p>{vm.searchQuery || vm.selectedTag ? 'Prueba con otro nombre o quita los filtros.' : vm.showFavoritesOnly ? 'Guarda una pieza con el marcador y vuelve a encontrarla aquí.' : 'Añade tus primeras piezas importando una colección.'}</p><button className="button button-dark" onClick={() => { if (!vm.currentCategory?.items.length) setDialog('create'); else { vm.setSearchQuery(''); vm.setSelectedTag(null); vm.setShowFavoritesOnly(false); } }}>{!vm.currentCategory?.items.length ? 'Importar colección' : 'Ver toda la colección'}<ArrowRight size={16} /></button></div> : vm.viewMode === 'compact' ? <div className="collection-list">{vm.displayItems.map(item => <article key={item.id} className="list-item"><span className="list-rank">{item.isHonorary ? '✳' : String(item.rank).padStart(2, '0')}</span><button className="list-image" onClick={() => detail.openDetail(item)} aria-label={`Ver ${item.title}`}><Artwork item={item} /></button><button className="list-description" onClick={() => detail.openDetail(item)}><h3>{item.title}</h3><p>{item.work}</p></button><span className="list-badge">{item.badges[0]}</span><span className="tier-label">{item.tier || 'A'}</span><button className={`icon-button ${detail.isFavorite(item.id) ? 'is-saved' : ''}`} aria-label={`Guardar ${item.title} en favoritos`} aria-pressed={detail.isFavorite(item.id)} onClick={() => favorite(item.id)}><Bookmark size={18} fill={detail.isFavorite(item.id) ? 'currentColor' : 'none'} /></button><button className="icon-button" aria-label={`Ver detalles de ${item.title}`} onClick={() => detail.openDetail(item)}><ArrowUpRight size={19} /></button></article>)}</div> : <><div className={vm.viewMode === 'podium' ? 'collection-grid podium-grid' : 'collection-grid'}>{(vm.viewMode === 'podium' ? [...vm.displayItems].sort((a, b) => Number(!!a.isHonorary) - Number(!!b.isHonorary) || a.rank - b.rank).slice(0, 3) : vm.displayItems).map(renderCard)}</div>{vm.viewMode === 'podium' && <p className="podium-note"><Trophy size={15} /> Las tres primeras posiciones de esta selección.</p>}</>}
+            {vm.isCurrentCategoryCustom && <div className="delete-collection">{pendingDelete ? <><span>¿Eliminar esta colección de este dispositivo?</span><button onClick={async () => { await vm.deleteCategory(vm.activeCategoryId); setPendingDelete(false); setToast('Colección eliminada'); }}>Sí, eliminar</button><button onClick={() => setPendingDelete(false)}>Cancelar</button></> : <button onClick={() => setPendingDelete(true)}>Eliminar colección</button>}</div>}
+          </section>
+          <section className="closing-note"><span className="closing-star" aria-hidden="true">✳</span><p>No es una lista cualquiera.<br />Es un pequeño mapa de <em>quién soy.</em></p><button onClick={() => setDialog('create')}>La próxima obsesión tiene su lugar aquí <Plus size={17} /></button></section>
+          <footer className="footer"><span>topáurea. <span>Un universo propio.</span></span><button onClick={() => setDialog('brand')}>Identidad de marca <ArrowUpRight size={13} /></button><span>Hecho con intención <Heart size={12} /></span></footer>
+        </main>
+      </div>
+      <CollectionDialogs dialog={dialog} onClose={() => setDialog(null)} detail={detail} category={vm.currentCategory} items={vm.displayItems} onFavorite={favorite} onAddCategory={async category => { await vm.addNewCategory(category); vm.setSearchQuery(''); vm.setSelectedTag(null); vm.setShowFavoritesOnly(false); }} onToast={setToast} />
+      <div className={`toast ${toast ? 'toast-visible' : ''}`} role="status">{toast && <><Check size={16} />{toast}</>}</div>
     </div>
   );
 }

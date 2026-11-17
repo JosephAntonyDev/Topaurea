@@ -21,15 +21,13 @@ export function useCategoryViewModel(initialCategoryId = 'characters', favoriteI
     try {
       const data = await categoryRepository.getAllCategories();
       setCategories(data);
-      if (!data.some((c) => c.id === activeCategoryId) && data.length > 0) {
-        setActiveCategoryId(data[0].id);
-      }
+      setActiveCategoryId(current => data.some(c => c.id === current) ? current : data[0]?.id || 'characters');
     } catch (err: any) {
       setErrorMessage(err.message || 'Error al cargar las categorías.');
     } finally {
       setIsLoading(false);
     }
-  }, [activeCategoryId]);
+  }, []);
 
   useEffect(() => {
     refreshCategories();
@@ -49,7 +47,7 @@ export function useCategoryViewModel(initialCategoryId = 'characters', favoriteI
   // Available tags in current category
   const availableTags = useMemo(() => {
     if (!currentCategory) return [];
-    return currentCategory.tags || [];
+    return [...new Set(currentCategory.items.map(item => item.work))];
   }, [currentCategory]);
 
   // Total favorites count in current category
@@ -117,7 +115,8 @@ export function useCategoryViewModel(initialCategoryId = 'characters', favoriteI
 
   const addNewCategory = useCallback(async (newCategory: Category) => {
     if (categoryRepository.saveCustomCategory) {
-      await categoryRepository.saveCustomCategory(newCategory);
+      const saved = await categoryRepository.saveCustomCategory(newCategory);
+      if (!saved) throw new Error('No hay espacio para guardar esta colección en el navegador. Exporta una copia y libera espacio.');
       await refreshCategories();
       setActiveCategoryId(newCategory.id);
     }
@@ -125,7 +124,8 @@ export function useCategoryViewModel(initialCategoryId = 'characters', favoriteI
 
   const deleteCategory = useCallback(async (id: string) => {
     if (categoryRepository.deleteCustomCategory) {
-      await categoryRepository.deleteCustomCategory(id);
+      const deleted = await categoryRepository.deleteCustomCategory(id);
+      if (!deleted) throw new Error('No se pudo eliminar la colección.');
       setActiveCategoryId('characters');
       await refreshCategories();
     }

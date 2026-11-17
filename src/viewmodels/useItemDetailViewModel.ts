@@ -9,7 +9,8 @@ export function useItemDetailViewModel() {
   const [favoriteIds, setFavoriteIds] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem('topaurea_favorites') || localStorage.getItem('auravault_favorites');
-      return saved ? JSON.parse(saved) : [];
+      const parsed = saved ? JSON.parse(saved) : [];
+      return Array.isArray(parsed) ? parsed.filter((id): id is string => typeof id === 'string') : [];
     } catch {
       return [];
     }
@@ -54,14 +55,15 @@ export function useItemDetailViewModel() {
 
   const generateShareText = useCallback((category: Category | null, items: TopItem[]) => {
     if (!category) return '';
-    let text = `⚡ Mi ${category.name} [Topáurea]\n`;
-    text += `"${category.subtitle}"\n\n`;
+    let text = `TOPÁUREA — ${category.name}\n`;
+    if (category.subtitle) text += `${category.subtitle}\n`;
+    text += '\n';
     items.forEach((it) => {
       const rankBadge = it.isHonorary ? '★ [Mención]' : `#${it.rank.toString().padStart(2, '0')}`;
       text += `${rankBadge} ${it.title} (${it.work})\n`;
-      text += `  ↳ «${it.quote}»\n`;
+      if (it.quote) text += `  «${it.quote}»\n`;
     });
-    text += `\n✨ Curado y preservado en Topáurea`;
+    text += `\nUn universo propio. Curado con intención en Topáurea.`;
     return text;
   }, []);
 
@@ -78,6 +80,7 @@ export function useItemDetailViewModel() {
   }, [generateShareText]);
 
   return {
+    favoriteIds,
     selectedItem,
     openDetail,
     closeDetail,
